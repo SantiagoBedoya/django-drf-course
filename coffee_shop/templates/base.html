@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Coffe Shop</title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    </head>
+    <body>
+        <header class="bg-amber-600 text-white p-4 flex justify-between items-center">
+            <a href="{% url 'list_product' %}" class="text-xl font-bold">Coffee Shop</a>
+            <div>
+                {% if user.is_authenticated %}
+                    <span class="font-semibold">{{ user.username }}</span>
+                    <a href="{% url 'my_order' %}" class="ml-4 hover:underline text-sm">Mi Orden</a>
+                    <form action="{% url 'logout' %}" method="POST" class="inline ml-4">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-amber-800 hover:bg-amber-900 px-3 py-1 rounded text-sm cursor-pointer">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="hover:underline">Login</a>
+                {% endif %}
+            </div>
+        </header>
+        <main class="p-4">
+            {% block content %} {% endblock content %}
+        </main>
+    </body>
+</html>
